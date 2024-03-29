@@ -1,4 +1,5 @@
 from pyspark.sql import SparkSession
+from pyspark.sql.functions import udf
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType, DateType
 from config.config import configuration
 from udf_utils import *
@@ -69,4 +70,11 @@ job_bulletins_df = (spark.readStream
                     .option('wholetext', 'true')
                     .load(text_input_dir))
 
-job_bulletins_df.show()
+
+query = (job_bulletins.df.writeStream
+         .outputMode('append')
+         .format('console')
+         .start()
+         )
+
+query.awaitTermination()
