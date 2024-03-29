@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession
-from pyrspark.sql.types import StructType, StructField, StringType, DoubleType, DateType
+from pyspark.sql.types import StructType, StructField, StringType, DoubleType, DateType
 from config.config import configuration
 from udf_utils import *
 
@@ -62,4 +62,11 @@ if __name__ == "__main__":
     ])
 
 
-  udf = define_udfs()  
+udfs = define_udfs()
+
+job_bulletins_df = (spark.readStream
+                    .format('text')
+                    .option('wholetext', 'true')
+                    .load(text_input_dir))
+
+job_bulletins_df.show()
