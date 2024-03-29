@@ -74,6 +74,7 @@ job_bulletins_df = (spark.readStream
 query = (job_bulletins.df.writeStream
          .outputMode('append')
          .format('console')
+         .option('truncate', False)
          .start()
          )
 
