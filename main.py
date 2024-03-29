@@ -39,4 +39,5 @@ if __name__ == "__main__":
         StructField('application_location', StringType(), True),
     ])
 
-    
+
+  udf = define_udfs()  
